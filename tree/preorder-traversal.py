@@ -1,5 +1,6 @@
 from typing import List, Optional
 
+# 之所以叫前序编译, 因为根节点处理在前, 同理中序, 后序遍历分别是在中间处理根节点和在后处理根节点
 
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
