@@ -9,7 +9,7 @@ class Z_Heap:
 
     # 节点比较方法, 可重写, 相等返回0, 胜出返回1, 否则返回-1
     @classmethod
-    def compare(cls, first:int, second:int):
+    def compare(cls, first: int, second: int):
         if first == second:
             return 0
         return 1 if first > second else -1
@@ -28,15 +28,15 @@ class Z_Heap:
         return self.__data[0]
 
     # 获取左子节点index
-    def get_left(self, index:int):
+    def get_left(self, index: int):
         return 2 * index + 1
 
     # 获取右子节点index
-    def get_right(self, index:int):
+    def get_right(self, index: int):
         return 2 * index + 2
 
     # 获取父节点index
-    def get_parent(self, index:int):
+    def get_parent(self, index: int):
         if index == 0:
             return -1
         return int((index - 1)/2)
@@ -50,7 +50,8 @@ class Z_Heap:
             if parent != -1:
                 self.sift_down(parent)
 
-    # 取出堆顶节点
+    # 取出堆顶节点(删除并返回)
+    # 讲最小值(最大堆为例)与最大值交换, 弹出最大值, 然后对堆顶进行下沉操作
     def sift(self):
         if self.max_index == -1:
             raise Exception("empty heap")
@@ -72,6 +73,7 @@ class Z_Heap:
         return replaced
 
     # 下沉
+    # 先选出孩子节点中的较大值(最大堆为例), 然后与当前节点比较, 如果大于当前节点, 则交换位置, 并继续对被交换的孩子节点进行下沉
     def sift_down(self, index):
         node_val = self.__data[index]
         left_index = self.get_left(index)
@@ -90,6 +92,7 @@ class Z_Heap:
             self.sift_down(comparing_index)
 
     # 上浮
+    # 与父节点比较, 如果大于父节点(最大堆为例), 则交换位置, 并在新的位置上继续进行上浮操作
     def sift_up(self, index):
         node_val = self.__data[index]
         parent_index = self.get_parent(index)
@@ -100,6 +103,7 @@ class Z_Heap:
                 self.sift_up(parent_index)
 
     # 添加节点
+    # 添加只队列末尾(堆的最远端), 然后进行上浮
     def push(self, num):
         self.__data.append(num)
         self.sift_up(self.max_index)
@@ -134,15 +138,11 @@ class Z_Heap:
         return cur_all
 
 
-
-
 class A_Heap(Z_Heap):
 
     @classmethod
     def compare(cls, first: int, second: int):
         return super().compare(first, second) * -1
-
-
 
 
 if __name__ == "__main__":
